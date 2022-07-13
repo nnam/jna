@@ -27,6 +27,7 @@ import com.sun.jna.LastErrorException;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.BaseTSD.ULONG_PTR;
+import com.sun.jna.platform.win32.WinDef.DWORDByReference;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
@@ -4340,6 +4341,6 @@ public interface Kernel32 extends StdCallLibrary, WinNT, Wincon {
      * @return If the function succeeds, the return value is nonzero.<br>
      *         If the function fails, the return value is zero. To get extended error information, call GetLastError.
      */
-    boolean VirtualProtectEx(HANDLE handle, Pointer lpAddress, SIZE_T dwSize, DWORD flNewProtect, DWORD_PTR lpflOldProtect);
+    boolean VirtualProtectEx(HANDLE handle, Pointer lpAddress, SIZE_T dwSize, DWORD flNewProtect, DWORDByReference lpflOldProtect);
 
 }
