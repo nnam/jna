@@ -4307,4 +4307,39 @@ public interface Kernel32 extends StdCallLibrary, WinNT, Wincon {
      * @see <A HREF="https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getapplicationrestartsettings">MSDN Entry</A>
      */
     HRESULT GetApplicationRestartSettings(HANDLE hProcess, char[] pwzCommandline, IntByReference pcchSize, IntByReference pdwFlags);
+
+    /**
+     * Changes the protection on a region of committed pages in the virtual address
+     * space of a specified process.
+     * @see <a href="https://msdn.microsoft.com/en-us/library/aa366899.aspx">MSDN</a>
+     *
+     * @param handle A handle to the process whose memory protection is to be changed.<br>
+     *               The handle must have the PROCESS_VM_OPERATION access right.<br>
+     *               For more information, see
+     *               <a href="https://msdn.microsoft.com/en-us/library/ms684880.aspx">Process Security and Access Rights.</a>
+     *
+     * @param lpAddress A pointer to the base address of the region of pages whose<br>
+     *                  access protection attributes are to be changed.<br>
+     *                  All pages in the specified region must be within the same reserved<br>
+     *                  region allocated when calling the VirtualAlloc or VirtualAllocEx function using MEM_RESERVE.<br>
+     *                  The pages cannot span adjacent reserved regions that were allocated by separate calls to<br>
+     *                  VirtualAlloc or VirtualAllocEx using MEM_RESERVE.
+     *
+     * @param dwSize The size of the region whose access protection attributes are changed, <br>
+     *               in bytes. The region of affected pages includes all pages containing one <br>
+     *               or more bytes in the range from the lpAddress parameter to (lpAddress+dwSize). <br>
+     *               This means that a 2-byte range straddling a page boundary causes the protection <br>
+     *               attributes of both pages to be changed.
+     *
+     * @param flNewProtect The memory protection option. This parameter can be one of the <a href="https://msdn.microsoft.com/en-us/library/aa366786.aspx">memory protection constants.</a>
+     *
+     * @param lpflOldProtect A pointer to a variable that receives the previous access protection of the<br>
+     *                       first page in the specified region of pages. If this parameter is NULL or does not<br>
+     *                       point to a valid variable, the function fails.
+     *
+     * @return If the function succeeds, the return value is nonzero.<br>
+     *         If the function fails, the return value is zero. To get extended error information, call GetLastError.
+     */
+    boolean VirtualProtectEx(HANDLE handle, Pointer lpAddress, SIZE_T dwSize, DWORD flNewProtect, DWORD_PTR lpflOldProtect);
+
 }
